@@ -1,0 +1,205 @@
+swagger: "2.0"
+info:
+    title: Directory Service
+    description: Service for multiplying numbers, a Goa teaser
+    version: ""
+host: localhost:8000
+consumes:
+    - application/json
+    - application/xml
+    - application/gob
+produces:
+    - application/json
+    - application/xml
+    - application/gob
+paths:
+    /ds:
+        get:
+            tags:
+                - ds
+            summary: list ds
+            description: List all stored bottles
+            operationId: ds#list
+            responses:
+                "200":
+                    description: OK response.
+                    schema:
+                        $ref: '#/definitions/DsAccountMgmtResponseCollection'
+            schemes:
+                - http
+    /ds/complete/{token}:
+        put:
+            tags:
+                - ds
+            summary: complete ds
+            description: Complete New Signup flow with token
+            operationId: ds#complete
+            parameters:
+                - name: token
+                  in: path
+                  description: Verification token
+                  required: true
+                  type: string
+                - name: CompleteRequestBody
+                  in: body
+                  required: true
+                  schema:
+                    $ref: '#/definitions/DsCompleteRequestBody'
+            responses:
+                "200":
+                    description: OK response.
+                    schema:
+                        $ref: '#/definitions/DsCompleteResponseBody'
+            schemes:
+                - http
+    /ds/multiply/{a}/{b}:
+        get:
+            tags:
+                - ds
+            summary: demo ds
+            operationId: ds#demo
+            parameters:
+                - name: a
+                  in: path
+                  description: Left operand
+                  required: true
+                  type: integer
+                - name: b
+                  in: path
+                  description: Right operand
+                  required: true
+                  type: integer
+            responses:
+                "200":
+                    description: OK response.
+                    schema:
+                        type: integer
+                        format: int64
+            schemes:
+                - http
+    /ds/openapi.json:
+        get:
+            tags:
+                - ds
+            summary: Download ./gen/http/openapi.json
+            operationId: ds#/ds/openapi.json
+            responses:
+                "200":
+                    description: File downloaded
+                    schema:
+                        type: file
+            schemes:
+                - http
+definitions:
+    AccountMgmtResponse:
+        title: 'Mediatype identifier: application/vnd.harness.ds.accountmgmt; view=default'
+        type: object
+        properties:
+            accountname:
+                type: string
+                description: Name of the Account/Company
+                example: ABC Pvt Ltd
+            clusterurl:
+                type: string
+                description: Tells in which cluster does this account operates in
+                example: John Doe
+            id:
+                type: integer
+                description: ID is an integer type unique id of this DB entity of account.
+                example: 1
+                format: int64
+            uuid:
+                type: string
+                description: UUID is the the unique id of this Account
+                example: kmpySmUISimoRrJL6NL73w
+        description: AccountMgmt type describes a customer account of company. (default view)
+        example:
+            accountname: ABC Pvt Ltd
+            clusterurl: John Doe
+            id: 1
+            uuid: kmpySmUISimoRrJL6NL73w
+        required:
+            - id
+            - uuid
+            - clusterurl
+            - accountname
+    DsAccountMgmtResponseCollection:
+        title: 'Mediatype identifier: application/vnd.harness.ds.accountmgmt; type=collection; view=default'
+        type: array
+        items:
+            $ref: '#/definitions/AccountMgmtResponse'
+        description: ListResponseBody is the result type for an array of AccountMgmtResponse (default view)
+        example:
+            - accountname: ABC Pvt Ltd
+              clusterurl: John Doe
+              id: 1
+              uuid: kmpySmUISimoRrJL6NL73w
+            - accountname: ABC Pvt Ltd
+              clusterurl: John Doe
+              id: 1
+              uuid: kmpySmUISimoRrJL6NL73w
+            - accountname: ABC Pvt Ltd
+              clusterurl: John Doe
+              id: 1
+              uuid: kmpySmUISimoRrJL6NL73w
+            - accountname: ABC Pvt Ltd
+              clusterurl: John Doe
+              id: 1
+              uuid: kmpySmUISimoRrJL6NL73w
+    DsCompleteRequestBody:
+        title: DsCompleteRequestBody
+        type: object
+        properties:
+            gaClientId:
+                type: string
+                description: gaClientId
+                example: Voluptatem quod architecto.
+            referer:
+                type: string
+                description: referer
+                example: Aliquid est quo.
+            visitorToken:
+                type: string
+                description: visitorToken
+                example: Quos praesentium.
+        example:
+            gaClientId: Qui dolor iusto commodi consequatur soluta.
+            referer: Voluptas sunt in.
+            visitorToken: Sed commodi et et.
+    DsCompleteResponseBody:
+        title: 'Mediatype identifier: application/vnd.harness.ds.user; view=default'
+        type: object
+        properties:
+            accountname:
+                type: string
+                description: Name of the Account/Company
+                example: Harness
+            clusterurl:
+                type: string
+                description: Tells in which cluster does this account operates in
+                example: http://localdev.harness.io/prod1
+            email:
+                type: string
+                description: email of this user
+                example: shashank.singh@harness.io
+            name:
+                type: string
+                description: name of this user
+                example: Shashank Singh
+            uuid:
+                type: string
+                description: UUID is the the unique id of this Account
+                example: kmpySmUISimoRrJL6NL73w
+        description: CompleteResponseBody result type (default view)
+        example:
+            accountname: Harness
+            clusterurl: http://localdev.harness.io/prod1
+            email: shashank.singh@harness.io
+            name: Shashank Singh
+            uuid: kmpySmUISimoRrJL6NL73w
+        required:
+            - uuid
+            - email
+            - name
+            - clusterurl
+            - accountname

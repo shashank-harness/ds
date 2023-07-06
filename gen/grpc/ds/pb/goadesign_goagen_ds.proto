@@ -1,0 +1,49 @@
+// Code generated with goa v3.11.3, DO NOT EDIT.
+//
+// ds protocol buffer definition
+//
+// Command:
+// $ goa gen ds/design
+
+syntax = "proto3";
+
+package ds;
+
+option go_package = "/dspb";
+
+// The directory service handles account mgmt
+service Ds {
+	// List all stored bottles
+	rpc List (ListRequest) returns (AccountMgmtCollection);
+	// Demo implements demo.
+	rpc Demo (DemoRequest) returns (DemoResponse);
+}
+
+message ListRequest {
+}
+
+message AccountMgmtCollection {
+	repeated AccountMgmt field = 1;
+}
+// AccountMgmt type describes a customer account of company.
+message AccountMgmt {
+	// ID is an integer type unique id of this DB entity of account.
+	sint32 id = 1;
+	// UUID is the the unique id of this Account
+	string uuid = 2;
+	// Tells in which cluster does this account operates in
+	string clusterurl = 3;
+	// Name of the Account/Company
+	string accountname = 4;
+}
+
+message DemoRequest {
+	// Left operand
+	sint32 a = 1;
+	// Right operand
+	sint32 b = 2;
+}
+
+message DemoResponse {
+	sint32 field = 1;
+}
