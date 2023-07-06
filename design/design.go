@@ -36,7 +36,7 @@ var _ = Service("ds", func() {
 			Response(CodeOK)
 		})
 	})
-	//String token, String referer, String gaClientId, String visitorToken
+
 	Method("complete", func() {
 		Description("Complete New Signup flow with token")
 		Payload(func() {
@@ -53,25 +53,7 @@ var _ = Service("ds", func() {
 			Response(StatusOK)
 		})
 	})
-	/*Method("get", func() {
-		Description("Get Account by ID")
-		Payload(func() {
-			Field(1, "id", String, "ID of bottle to show")
-			Field(2, "view", String, "View to render", func() {
-				Enum("default", "tiny")
-			})
-			Required("id")
-		})
-		Result(Account)
-		//Error("not_found", NotFound, "Account not found")
-		HTTP(func() {
-			GET("/{id}")
-			Param("view")
-			Response(StatusOK)
-			//Response("not_found", StatusNotFound)
-		})
-	})
-	*/
+
 	Method("demo", func() {
 		Payload(func() {
 			Field(1, "a", Int, "Left operand")
